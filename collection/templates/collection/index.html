@@ -1,18 +1,62 @@
-{% extends "collection/base.html" %}
+{% extends "collection/base.html" %} {% block content %}
+<div class="flex justify-center">
+  <div class="px-8 py-4 flex flex-col gap-2 items-start max-w-[1000px]">
+    {% for artwork in data %}
+    <div class="h-[200px] flex text-[#ccc] gap-3">
+      <img
+        class="h-[200px] w-fit"
+        src="{{ artwork.image_url }}"
+        alt="{{ artwork.title }}"
+      />
+      {% if user.is_authenticated %}
 
-{% block content %}
-<div class=" flex justify-center md:mx-auto md:max-w-screen-2xl px-2">
-        {% if user.is_authenticated %}
-        <div class="my-5 bg-slate-200 border-l-4 border-slate-500 text-slate-700 p-6" role="alert">
-        <p class="font-bold">Hola {{user.username}}</p>
-          <p>Aquí podras ver muchas pinturas.</p>
-          <p class="font-bold"> <a class="text-sky-600" href="/accounts/logout"> Termina la sesión </a></p>
-        </div>
-        {% else %}
-        <div class="my-5 bg-slate-200 border-l-4 border-slate-500 text-slate-700 p-6" role="alert">
-          <p class="font-bold">Hola</p>
-          <p > Por favor <a class="text-sky-600 font-bold" href="/accounts/login"> inicia sesión </a> para ver esta página.</p>
-        </div>
-        {% endif %}
+      <div class="flex flex-col gap-4 text-[20px] items-center">
+        <button onClick="add(event, 'Liked', {{artwork.id}})">
+          <i id="h-{{artwork.id}}" class="fa fa-heart transition-all"></i>
+        </button>
+        <button onClick="add(event, 'Saved', {{artwork.id}})">
+          <i id="s-{{artwork.id}}" class="fa fa-bookmark transition-all"></i>
+        </button>
+        <a href="/artworks/{{artwork.id}}">
+          <i class="fa fa-info"></i>
+        </a>
+      </div>
+      {% endif %}
+      <div>
+        <p class="text-xl font-bold">{{ artwork.title }}</p>
+        <p class="text-sm text-[#aaa]">{{ artwork.author.name }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
+
+<script>
+  console.log("hola");
+  var clicked = "";
+  function add(event, type, artwork_id) {
+    event.preventDefault();
+    var iconS = type === "Liked" ? "h-" : "s-";
+    var color = iconS === "h-" ? "text-red-500" : "text-yellow-500";
+    var iconEl = document.getElementById(iconS + artwork_id);
+    if (iconEl.classList.contains(color)) {
+      iconEl.classList.remove(color);
+    } else {
+      iconEl.classList.add(color);
+    }
+    if (clicked.includes(`${type}-${artwork_id},`)) return;
+    clicked += `${type}-${artwork_id},`;
+
+    console.log(clicked);
+    fetch(`/add_to/${type}/${artwork_id}`, {
+      method: "POST",
+    });
+  }
+  function containsObject(obj, list) {
+    console.log(list.indexOf(obj));
+
+    return list.indexOf(obj) !== -1;
+  }
+</script>
+
 {% endblock content %}
