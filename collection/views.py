@@ -65,9 +65,12 @@ def artwork(request, artwork_id):
 
 
 def search(request):
-    if request.method == "POST":
-        query = request.POST.get("query")
-        artworks = Artwork.objects.filter(title__icontains=query)
-        return render(request, "collection/search.html", {"data": artworks})
+    query = request.GET.get("query")
+    if not query:
+        artworks = Artwork.objects.all()
     else:
-        return render(request, "collection/search.html")
+        artworks = Artwork.objects.filter(
+            title__icontains=query,
+        )
+
+    return render(request, "collection/search.html", {"data": artworks})
