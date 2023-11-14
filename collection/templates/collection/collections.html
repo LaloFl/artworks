@@ -3,17 +3,22 @@
   <h1 class="text-4xl font-bold">Collections</h1>
   {% for collection in collections %}
   <h1 class="text-2xl">{{ collection.name }}</h1>
-  <div class="flex gap-4 max-w-[1000px] overflow-x-auto">
+  <div class="flex gap-4 max-w-[1000px] overflow-x-auto items-end">
     {% for artwork in collection.artworks.all %}
-    <a href="/artworks/{{ artwork.id }}">
-      <img
-        src="{{ artwork.image_url }}"
-        alt=""
-        class="h-[200px] border border-white opacity-80 hover:opacity-100 transition-all"
-      />
-    </a>
+    <img
+      src="{{ artwork.image_url }}"
+      alt="/artworks/{{artwork.id}}"
+      class="h-[200px] hover:h-[210px] border border-white opacity-80 hover:opacity-100 transition-all cursor-pointer"
+    />
     {% endfor %}
   </div>
   {% endfor %}
 </div>
+<script>
+  document.querySelectorAll("img").forEach((img) => {
+    img.addEventListener("click", () => {
+      window.location.href = img.alt;
+    });
+  });
+</script>
 {% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "collection/base.html" %} {% block content %}
+<div class="w-full flex justify-center items-center mt-6">
+  <div class="max-w-[1200px] flex-col mx-8 mt-6 items-center gap-16">
+    <div class="flex flex-col items-center gap-4">
+      <h1 class="text-4xl font-bold">{{ artworks.first.author.name }}</h1>
+      <p class="text-xl">{{ artworks.first.author.born_date }}</p>
+      <h2 class="text-2xl font-bold">Some of this author's artwork:</h2>
+    </div>
+  </div>
+  <div class="flex gap-4 max-w-[1000px] overflow-x-scroll">
+    {% for artwork in artworks %}
+    <img
+      src="{{ artwork.image_url }}"
+      alt="/artworks/{{artwork.id}}"
+      class="h-[200px] hover:h-[210px] border border-white opacity-80 hover:opacity-100 transition-all cursor-pointer"
+    />
+    {% endfor %}
+  </div>
+</div>
+<script>
+  document.querySelectorAll("img").forEach((img) => {
+    img.addEventListener("click", () => {
+      window.location.href = img.alt;
+    });
+  });
+</script>
+{% endblock content %}

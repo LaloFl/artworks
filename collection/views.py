@@ -56,7 +56,7 @@ def collections(request):
 def author(request, author_id):
     artworks = Artwork.objects.filter(author__slug=author_id)
     print(len(artworks))
-    return render(request, "collection/index.html", {"artworks": artworks})
+    return render(request, "collection/author.html", {"artworks": artworks})
 
 
 def artwork(request, artwork_id):
@@ -68,6 +68,6 @@ def search(request):
     if request.method == "POST":
         query = request.POST.get("query")
         artworks = Artwork.objects.filter(title__icontains=query)
-        return render(request, "collection/index.html", {"data": artworks})
+        return render(request, "collection/search.html", {"data": artworks})
     else:
         return render(request, "collection/search.html")
