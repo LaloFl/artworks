@@ -1,11 +1,17 @@
 {% load static %}
-<div class=" flex justify-center md:mx-auto md:max-w-screen-xl px-2">
-  <div class="mt-6 mx-auto">
-     <a class="" href="/">
-        <span class="sr-only">Artworks</span>
-        <img class="h-20 w-auto" src="{% static 'img/logo.png' %}" 
-                alt="artworks">
+<div class="flex w-screen py-4 gap-5 px-6 bg-slate-700 text-white style-italic items-center &>*:self-center &>*:self-center">
+     <a class="font-bold text-[32px] mr-4" href="/">
+     Artworks
+     {% if user.is_authenticated %}
+       <a class="" href="/accounts/logout">Logout</a>
+       <a class="" href="/collections">My Collections</a>
+       {% else %}
+         <a class="" href="/accounts/login">Login</a>
+         {% endif %}
      </a>
-  </div>
+       <a class="" href="/artworks">Search</a>
+
+
+  
 </div>
 

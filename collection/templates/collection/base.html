@@ -10,7 +10,7 @@
     {% block head %}
 
     {% endblock head %}
-    <title> artworks </title>
+    <title> Artworks </title>
 
       <script>
       /*to prevent Firefox FOUC, this must be here*/
@@ -24,7 +24,7 @@
       </style>
   </head>
 
-  <body class="bg-white dark:bg-slate-900" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <body class="bg-slate-900" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% block header %}
       {% include "collection/header.html" %} 
     {% endblock header %}
