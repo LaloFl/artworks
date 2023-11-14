@@ -51,3 +51,23 @@ def add_to(request, collection_id, artwork_id):
 def collections(request):
     collections = Collection.objects.filter(user=request.user)
     return render(request, "collection/collections.html", {"collections": collections})
+
+
+def author(request, author_id):
+    artworks = Artwork.objects.filter(author__slug=author_id)
+    print(len(artworks))
+    return render(request, "collection/index.html", {"artworks": artworks})
+
+
+def artwork(request, artwork_id):
+    artwork = Artwork.objects.get(id=artwork_id)
+    return render(request, "collection/artwork.html", {"artwork": artwork})
+
+
+def search(request):
+    if request.method == "POST":
+        query = request.POST.get("query")
+        artworks = Artwork.objects.filter(title__icontains=query)
+        return render(request, "collection/index.html", {"data": artworks})
+    else:
+        return render(request, "collection/search.html")

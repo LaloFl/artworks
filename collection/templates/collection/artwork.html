@@ -1,0 +1,17 @@
+{% extends "collection/base.html" %} {% block content %}
+<div class="w-full flex justify-center items-center">
+  <div class="max-w-[1200px] flex mx-8 mt-6 items-center gap-16">
+    <img class="w-[50%] mx-4" src="{{artwork.image_url}}" />
+    <div class="w-[50%] mx-4 flex flex-col gap-4">
+      <h1
+        class="text-4xl italic p-[7px] hover:p-[6px] hover:border border-white"
+      >
+        {{artwork.title}}
+      </h1>
+      <a href="/author/{{artwork.author.slug}}"
+        ><h2 class="text-2xl text-[#aaa]">{{artwork.author.name}}</h2></a
+      >
+    </div>
+  </div>
+</div>
+{% endblock content %}

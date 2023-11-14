@@ -24,7 +24,9 @@
       {% endif %}
       <div>
         <p class="text-xl font-bold">{{ artwork.title }}</p>
-        <p class="text-sm text-[#aaa]">{{ artwork.author.name }}</p>
+        <a href="/author/{{artwork.author.slug}}"
+          ><p class="text-sm text-[#aaa]">{{ artwork.author.name }}</p></a
+        >
       </div>
     </div>
     {% endfor %}
